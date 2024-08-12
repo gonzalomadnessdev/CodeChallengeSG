@@ -1,0 +1,23 @@
+services:
+  gateway-api:
+    image: codechallenge-sg/gateway-api
+    build:
+      context: ./ApiGateway
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    networks:
+      - proxybackend
+
+  cuenta-service:
+    image: codechallenge-sg/cuenta-service
+    build:
+      context: ./Services/CuentaService
+      dockerfile: Dockerfile
+    networks:
+      - proxybackend
+
+networks:
+  proxybackend:
+    name: proxybackend
+    driver: bridge
