@@ -13,10 +13,10 @@ namespace CuentaService.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "")]
-        public string Get()
+        [HttpGet("health")]
+        public IActionResult Health()
         {
-            return "Ok";
+            return Ok();
         }
     }
 }

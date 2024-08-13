@@ -17,6 +17,14 @@ services:
     networks:
       - proxybackend
 
+  auth-service:
+    image: codechallenge-sg/auth-service
+    build:
+      context: ./Services/AuthService
+      dockerfile: Dockerfile
+    networks:
+      - proxybackend
+
 networks:
   proxybackend:
     name: proxybackend
