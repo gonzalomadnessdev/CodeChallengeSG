@@ -8,6 +8,8 @@ services:
       - 8080:8080
     networks:
       - proxybackend
+    environment:
+      - JWT__Key=TiFBblSqOR1EAvuW4hojfyxoTB9T0VH4HvgHTNurKBYlEYX2pUMbv62R3zA7Qv6vfBGiEEIylqghEWqz5WMzp7DEhohyRv7i25SvOis2ABwxg6Mlf8rtwoQW6VDaYFDP
 
   cuenta-service:
     image: codechallenge-sg/cuenta-service
@@ -24,6 +26,8 @@ services:
       dockerfile: Dockerfile
     networks:
       - proxybackend
+    environment:
+      - JWT__Key=TiFBblSqOR1EAvuW4hojfyxoTB9T0VH4HvgHTNurKBYlEYX2pUMbv62R3zA7Qv6vfBGiEEIylqghEWqz5WMzp7DEhohyRv7i25SvOis2ABwxg6Mlf8rtwoQW6VDaYFDP
 
 networks:
   proxybackend:
