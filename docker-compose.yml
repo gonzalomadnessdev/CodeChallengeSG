@@ -18,6 +18,7 @@ services:
       dockerfile: Dockerfile
     networks:
       - proxybackend
+      - dbnetwork1
 
   auth-service:
     image: codechallenge-sg/auth-service
@@ -29,7 +30,24 @@ services:
     environment:
       - JWT__Key=TiFBblSqOR1EAvuW4hojfyxoTB9T0VH4HvgHTNurKBYlEYX2pUMbv62R3zA7Qv6vfBGiEEIylqghEWqz5WMzp7DEhohyRv7i25SvOis2ABwxg6Mlf8rtwoQW6VDaYFDP
 
+  cuentas-service-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=password@12345#
+    ports:
+      - 11433:1433
+    networks:
+      - dbnetwork1
+    volumes:
+    - "./mssql/data/:/var/opt/mssql/data/"
+    - "./mssql/log/:/var/opt/mssql/log/"
+    - "./mssql/secrets/:/var/opt/mssql/secrets/"
+
 networks:
   proxybackend:
     name: proxybackend
+    driver: bridge
+  dbnetwork1:
+    name: dbnetwork1
     driver: bridge
