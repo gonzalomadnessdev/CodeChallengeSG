@@ -5,6 +5,6 @@ namespace AuthService.Services
 {
     public interface IJwtTokenGenerator
     {
-        (string, DateTime) GenerarToken(User user);
+        (string, DateTime) GenerarToken(int subject);
     }
 }

@@ -35,8 +35,11 @@ namespace AuthService
                     JsonNamingPolicy.SnakeCaseLower;
             });
 
+            builder.Services.AddSingleton<DapperContext>();
             builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
             builder.Services.AddScoped<IUserRepository, UserInMemRepository>();
+            builder.Services.AddScoped<ICuentaRepository, CuentaDBRepository>();
+            builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

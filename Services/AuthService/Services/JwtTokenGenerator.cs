@@ -14,13 +14,13 @@ namespace AuthService.Services
         {
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JWT:Key"]!));
         }
-        public (string, DateTime) GenerarToken(User user)
+        public (string, DateTime) GenerarToken(int subject)
         {
             var signingCredentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Sub, subject.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
