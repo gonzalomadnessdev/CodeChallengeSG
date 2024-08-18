@@ -4,14 +4,8 @@ namespace CuentaService.Controllers
 {
     [ApiController]
     [Route("")]
-    public class IndexController : ControllerBase
+    public class CuentaController : ControllerBase
     {
-        private readonly ILogger<IndexController> _logger;
-
-        public IndexController(ILogger<IndexController> logger)
-        {
-            _logger = logger;
-        }
 
         [HttpGet("health")]
         public IActionResult Health()
