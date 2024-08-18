@@ -3,6 +3,8 @@ using AuthService.Dtos.Responses;
 using AuthService.Repositories;
 using AuthService.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 
 namespace AuthService.Controllers
 {
@@ -12,30 +14,55 @@ namespace AuthService.Controllers
     {
         private IJwtTokenGenerator _jwt;
         private IUserRepository _userRepository;
-        public AuthController(IJwtTokenGenerator jwt, IUserRepository userRepository)
+        private ICuentaRepository _cuentaRepository;
+        private IPasswordHasher _hasher;
+        public AuthController(IJwtTokenGenerator jwt, IUserRepository userRepository, ICuentaRepository cuentaRepository, IPasswordHasher hasher)
         {
             _jwt = jwt;
             _userRepository = userRepository;
+            _cuentaRepository = cuentaRepository;
+            _hasher = hasher;
         }
 
         [HttpPost("login")]
-        public IActionResult Login(LoginRequest request)
+        public async Task<IActionResult> Login(LoginRequest request)
         {
-            var user = _userRepository.GetUserRecords((user) => user.Username == request.Username)?.FirstOrDefault();
+            var cuenta = await _cuentaRepository.GetAsync(request.Username);
 
-            if (user == null) {
+            if (cuenta == null || !_hasher.Verify(request.Password, cuenta.Password)) {
                 return BadRequest();
             }
 
-            //utilizar hashing
-            if(user.Password != request.Password)
-            {
-                return BadRequest();
-            }
-
-            (var token, var expires) = _jwt.GenerarToken(user);
+            (var token, var expires) = _jwt.GenerarToken(cuenta.Id);
             return Ok(new LoginResponse { Token = token, Expires = expires});
         }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(RegisterRequest request)
+        {
+            var hashedPassword = _hasher.Hash(request.Password);
+            await _cuentaRepository.Create(request.Username, hashedPassword);
+
+            return Ok();
+        }
+
+        //[HttpGet("test")]
+        //public async Task<IActionResult> Test()
+        //{
+        //    var cuentas = await _cuentaRepository.GetCuentasAsync();
+
+        //    return Ok(cuentas);
+        //}
+
+        //[HttpGet("testgetsubject")]
+        //public async Task<IActionResult> Test2()
+        //{
+        //    var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+        //    var jwtToken = new JwtSecurityToken(token);
+
+        //    return Ok(jwtToken.Subject);
+
+        //}
 
         [HttpGet("health")]
         public IActionResult Health()
