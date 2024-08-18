@@ -13,13 +13,11 @@ namespace AuthService.Controllers
     public class AuthController : ControllerBase
     {
         private IJwtTokenGenerator _jwt;
-        private IUserRepository _userRepository;
         private ICuentaRepository _cuentaRepository;
         private IPasswordHasher _hasher;
-        public AuthController(IJwtTokenGenerator jwt, IUserRepository userRepository, ICuentaRepository cuentaRepository, IPasswordHasher hasher)
+        public AuthController(IJwtTokenGenerator jwt, ICuentaRepository cuentaRepository, IPasswordHasher hasher)
         {
             _jwt = jwt;
-            _userRepository = userRepository;
             _cuentaRepository = cuentaRepository;
             _hasher = hasher;
         }
@@ -43,7 +41,7 @@ namespace AuthService.Controllers
             var hashedPassword = _hasher.Hash(request.Password);
             await _cuentaRepository.Create(request.Username, hashedPassword);
 
-            return Ok();
+            return Created();
         }
 
         //[HttpGet("test")]
