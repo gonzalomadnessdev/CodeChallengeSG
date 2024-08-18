@@ -13,6 +13,17 @@ namespace AuthService.Repositories
             _context = context;
         }
 
+        public async Task<bool> ExistsAsync(string username)
+        {
+            const string sql = "SELECT COUNT(1) FROM Cuenta WHERE username = @username";
+
+            using (var conn = _context.CreateConnection())
+            {
+                var cuenta = await conn.ExecuteScalarAsync<bool>(sql, new { username });
+                return cuenta;
+            }
+        }
+
         public async Task<IEnumerable<Cuenta>> GetCuentasAsync()
         {
 
@@ -26,13 +37,13 @@ namespace AuthService.Repositories
 
         }
 
-        public async Task<bool> Create(string username, string password)
+        public async Task<bool> Create(Cuenta cuenta)
         {
-            const string sql = "INSERT INTO Cuenta VALUES (@username, @password)";
+            const string sql = "INSERT INTO Cuenta (Username, Password) VALUES (@username, @password)";
 
             using (var conn = _context.CreateConnection())
             {
-                var result = await conn.ExecuteAsync(sql, new { username, password });
+                var result = await conn.ExecuteAsync(sql, new { username = cuenta.Username, password = cuenta.Password });
                 return result > 0;
             }
         }

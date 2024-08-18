@@ -1,5 +1,6 @@
 ﻿using AuthService.Dtos.Requests;
 using AuthService.Dtos.Responses;
+using AuthService.Models;
 using AuthService.Repositories;
 using AuthService.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -38,8 +39,15 @@ namespace AuthService.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterRequest request)
         {
+            var exists = await _cuentaRepository.ExistsAsync(request.Username);
+
+            if (exists)
+            {
+                return BadRequest();
+            }
+
             var hashedPassword = _hasher.Hash(request.Password);
-            await _cuentaRepository.Create(request.Username, hashedPassword);
+            await _cuentaRepository.Create(new Cuenta { Username = request.Username, Password = hashedPassword });
 
             return Created();
         }
