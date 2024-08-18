@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AuthService
 {
@@ -28,16 +29,13 @@ namespace AuthService
             //    };
             //});
 
-            builder.Services.AddControllers()
-                .AddJsonOptions(options =>
+            builder.Services.AddControllers().AddJsonOptions(options =>
             {
-                options.JsonSerializerOptions.PropertyNamingPolicy =
-                    JsonNamingPolicy.SnakeCaseLower;
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
             });
 
             builder.Services.AddSingleton<DapperContext>();
             builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
-            builder.Services.AddScoped<IUserRepository, UserInMemRepository>();
             builder.Services.AddScoped<ICuentaRepository, CuentaDBRepository>();
             builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 
