@@ -32,7 +32,7 @@ namespace AuthService.Repositories
 
             using (var conn = _context.CreateConnection())
             {
-                var result = await conn.ExecuteAsync(sql, new { username = username, password = password });
+                var result = await conn.ExecuteAsync(sql, new { username, password });
                 return result > 0;
             }
         }
@@ -43,8 +43,8 @@ namespace AuthService.Repositories
 
             using (var conn = _context.CreateConnection())
             {
-                var cuenta = conn.QueryFirstOrDefaultAsync<Cuenta>(sql, new { username = username });
-                return await cuenta;
+                var cuenta = await conn.QueryFirstOrDefaultAsync<Cuenta>(sql, new { username });
+                return cuenta;
             }
         }
     }
