@@ -2,7 +2,7 @@
 {
     public class Cuenta
     {
-        public int Id { get; set; }
+        public int Id { get; }
         public decimal Saldo { get; set; }
 
     }
