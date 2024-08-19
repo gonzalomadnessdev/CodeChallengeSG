@@ -6,7 +6,7 @@ docker compose up -d
 ```
 2. Una vez corriendo los contenedores conectarse a la base de datos mapeada en el puerto 11433 mediante SSMS u otro DBMS:
 ```
-Server : 127.0.0.1\cuentas-service-db-1,11433
+Server : 127.0.0.1\sgdb-1,11433
 User: sa
 Password: password@12345#
 ```
