@@ -1,4 +1,5 @@
 
+using ApiGateway.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -35,6 +36,8 @@ namespace ApiGateway
             //    app.UseSwagger();
             //    app.UseSwaggerUI();
             //}
+
+            app.UseExceptionHandlerCustom();
 
             app.UseAuthentication();
             app.UseAuthorization();
