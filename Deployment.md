@@ -13,3 +13,5 @@ Password: password@12345#
 3. Ejecutar la query del archivo "SG.sql" (una vez ejecutada, la DB va a persistir en el volumen de la carpeta "./mssql")
 
 4. En caso de usar postman, importe la colleccion de endpoints mediante el archivo "CodeChallengeSG.postman_collection.json".
+
+5. En el archivo API.md se encuentra la documentacion de los endpoints
