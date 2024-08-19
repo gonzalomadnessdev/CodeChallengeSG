@@ -4,7 +4,7 @@ using Dapper;
 
 namespace CuentaService.Repositories
 {
-    public class CuentaMovimientoDBRepository : BaseDBRepository
+    public class CuentaMovimientoDBRepository : BaseDBRepository, ICuentaMovimientoRepository
     {
         public CuentaMovimientoDBRepository(DapperContext context) : base(context)
         {

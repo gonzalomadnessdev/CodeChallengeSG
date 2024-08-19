@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Text;
 using System.Text.Json.Serialization;
 using CuentaService.Repositories;
+using CuentaService.Services;
 
 namespace CuentaService
 {
@@ -39,6 +40,8 @@ namespace CuentaService
             builder.Services.AddSingleton<DapperContext>();
             builder.Services.AddScoped<ICuentaRepository, CuentaDBRepository>();
             builder.Services.AddScoped<ICuentaMovimientoRepository, CuentaMovimientoDBRepository>();
+            builder.Services.AddScoped<ICuentasMovimientosService, CuentasMovimientosService>();
+
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

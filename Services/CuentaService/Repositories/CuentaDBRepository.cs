@@ -23,7 +23,7 @@ namespace AuthService.Repositories
 
         public async Task<Cuenta?> GetAsync(int id)
         {
-            const string sql = "SELECT c.Id , cm.Saldo FROM Cuenta c LEFT JOIN CuentaMovimiento cm ON cm.CuentaId = c.Id WHERE c.id = @id";
+            const string sql = "SELECT c.Id , cm.Saldo FROM Cuenta c LEFT JOIN CuentaMovimiento cm ON cm.CuentaId = c.Id WHERE c.id = @id ORDER BY cm.Id DESC";
 
             using (var conn = _context.CreateConnection())
             {
