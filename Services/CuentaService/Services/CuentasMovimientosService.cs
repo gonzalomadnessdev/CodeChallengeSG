@@ -70,7 +70,7 @@ namespace CuentaService.Services
 
                 decimal nuevoSaldo = cuenta.Saldo - importe;
 
-                var result = await _cuentaMovimientoRepository.Crear(new CuentaMovimiento { CuentaId = id, Importe = importe, Saldo = nuevoSaldo });
+                var result = await _cuentaMovimientoRepository.Crear(new CuentaMovimiento { CuentaId = id, Importe = (-1 * importe), Saldo = nuevoSaldo });
 
                 if (!result)
                 {
