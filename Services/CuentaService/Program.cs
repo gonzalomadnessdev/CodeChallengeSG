@@ -3,7 +3,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using AuthService.Repositories;
-using System.Text.Json;
 using System.Text;
 using System.Text.Json.Serialization;
 using CuentaService.Repositories;
